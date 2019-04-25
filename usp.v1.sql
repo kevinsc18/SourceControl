@@ -1,15 +1,12 @@
 USE [warehouse]
 GO
-
-/****** Object:  StoredProcedure [dbo].[usprptexecutivecommission]    Script Date: 4/25/2019 1:10:57 PM ******/
+/****** Object:  StoredProcedure [dbo].[usprptexecutivecommission]    Script Date: 4/25/2019 1:38:19 PM ******/
 SET ANSI_NULLS OFF
 GO
-
 SET QUOTED_IDENTIFIER OFF
 GO
 
-
-CREATE PROCEDURE [dbo].[usprptexecutivecommission] (@packagekey AS INT)
+ALTER PROCEDURE [dbo].[usprptexecutivecommission] (@packagekey AS INT)
 AS
 /*
 
@@ -514,6 +511,3 @@ TRUNCATE TABLE dbo.[RptExecutiveCommission]
 	IF OBJECT_ID('tempdb..#RptExecutiveCommission') IS NOT NULL
 		DROP TABLE tempdb..#RptExecutiveCommission
 END
-GO
-
-
