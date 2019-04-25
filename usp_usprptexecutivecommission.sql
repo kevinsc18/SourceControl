@@ -109,7 +109,7 @@ BEGIN
 		,[BillingDateKey]
 		,[AdjustmentAmount]
     ,[BusinessStartDate]	
-	,[EndDate]			  
+	--,[EndDate]			  
 	--,[Yr1Rate]	     	  
 	--,[Yr2Rate]	     	  
 	--,[Yr3Rate]	     	  
@@ -134,7 +134,7 @@ BEGIN
 		,BillingDateKey
 		,SUM(isnull(FIA.[AdjustmentAmount],0.00)) AS [AdjustmentAmount]
 		,AcComm.BusinessStartDate
-		,AcComm.EndDate
+		--,AcComm.EndDate
 		
 		 -- 	 ,(select top 1 	AccountPayPercent
 		 --from  DimCommissionSetup where commissionkey=1) 
@@ -160,7 +160,7 @@ BEGIN
 			,SUM(ISNULL(f.MiscellaneousFees, 0.00)) MiscellaneousFees
 			,SUM(ISNULL(BackgroundFees, 0.0)) BackgroundFees
 			,fc.BusinessStartDate
-			,fc.EndDate
+			--,fc.EndDate
 			 ,fc.SiteNumber
 		FROM (
 			SELECT SUM(FC.Quantity * FC.UnitPrice) AS nactualamount
@@ -185,7 +185,7 @@ BEGIN
 				,DC.AccountExecutiveID
 			 ,dc.BusinessStartDate	  			  
 			
-			,dateadd(dd,1095, dc.BusinessStartDate) EndDate	 
+			--,dateadd(dd,1095, dc.BusinessStartDate) EndDate	 
 			,dc.SiteNumber
 			FROM [dbo].[FactComponent] fc WITH (NOLOCK)
 			INNER JOIN [dbo].[DimComponentUsageType] DCUT ON DCUT.[ComponentUsageTypeKey] = FC.[ComponentUsageTypeKey]
@@ -218,7 +218,7 @@ BEGIN
 			,BillingDateKey
 			,[AccountExecutiveID]
 			,BusinessStartDate
-			,EndDate
+			--,EndDate
 			,SiteNumber
 		) AcComm ON CS.CommissionKey = AcComm.CommissionKey
 		
@@ -233,7 +233,7 @@ BEGIN
 		,BillingDateKey
 , CONVERT(VARCHAR, cs.AccountAgeMin) + ' - ' + CONVERT(VARCHAR, cs.AccountAgeMax)
 ,AcComm.BusinessStartDate
-,AcComm.EndDate
+--,AcComm.EndDate
 ,SiteNumber
 		
 
@@ -255,7 +255,7 @@ BEGIN
 		,[BillingDateKey]
 		,[AdjustmentAmount]
 		,[BusinessStartDate]	 
-		,[EndDate]	        	 
+		--,[EndDate]	        	 
 		--,[Yr1Rate]	        	 
 		--,[Yr2Rate]	        	 
 		--,[Yr3Rate]	        	 
@@ -277,7 +277,7 @@ BEGIN
 		,BillingDateKey
 		,SUM(isnull(FIA.[AdjustmentAmount],0.00))
 	   ,Acage.BusinessStartDate		 
-		 ,acage.EndDate				 
+		-- ,acage.EndDate				 
 	  --  ,(select top 1 	AccountPayPercent					 
 		 --from  DimCommissionSetup where commissionkey=1) 	 
 		 --  ,(select top 1 	AccountPayPercent				 
@@ -301,7 +301,7 @@ BEGIN
 			,SUM(ISNULL(f.MiscellaneousFees, 0.00)) MiscellaneousFees
 			,SUM(ISNULL(BackgroundFees, 0.0)) BackgroundFees
 			,fc.BusinessStartDate		 
-			,fc.EndDate
+			--,fc.EndDate
 		FROM (
 			SELECT SUM(FC.Quantity * FC.UnitPrice) AS nactualamount
 				,FC.FileKey
@@ -323,7 +323,7 @@ BEGIN
 				,DC.ClientKey
 				,Dc.[AccountExecutiveID]
 				,dc.BusinessStartDate		 
-				,dateadd(dd,1095, dc.BusinessStartDate) EndDate	 
+				--,dateadd(dd,1095, dc.BusinessStartDate) EndDate	 
 
 	
 			FROM [dbo].[FactComponent] fc WITH (NOLOCK)
@@ -358,7 +358,7 @@ BEGIN
 			,BillingDateKey
 			,[AccountExecutiveID]
 			,fc.BusinessStartDate	
-			,fc.EndDate				 
+		--	,fc.EndDate				 
 		) Acage ON CS.CommissionKey = Acage.CommissionKey
 	LEFT JOIN [dbo].[FactInvoiceAdjustment] FIA ON
 	 --FIA.[CLientKey] = Acage.ClientKey  and
@@ -373,7 +373,7 @@ BEGIN
 		,acage.SiteNumber
 		,Acage.ClientKey				 
 		,Acage.BusinessStartDate		 
-		,acage.EndDate					 
+		--,acage.EndDate					 
 										  
    /* 3. New Business Buckete
    CONVERT(Date,DC.BusinessStartDate)>='04/01/2016'*/
@@ -394,7 +394,7 @@ INSERT INTO [#RptExecutiveCommission] (
 		,[BillingDateKey]
 		,[AdjustmentAmount]
 		,[BusinessStartDate]
-        ,[EndDate]
+        --,[EndDate]
 		
 		,[Yr1Rate]		
 		,[Yr2Rate]		
@@ -420,7 +420,7 @@ select  AgingInDays
 		,BillingDateKey
 		,SUM(isnull(FIA.[AdjustmentAmount],0.00)) AS [AdjustmentAmount]
 		 ,BusinessStartDate
-		 ,EndDate
+		 --,EndDate
 		
 		,Yr1Rate
 		,Yr2Rate
@@ -445,7 +445,7 @@ from
 			,isnull(FC.PerpetualRate,0)	PerpetualRate
 			,FC.[month]
 			,FC.BusinessStartDate
-			,FC.EndDate
+			--,FC.EndDate
 			,FC.AgingInDays
 		
 
@@ -469,7 +469,7 @@ from (
 			,FC.BillingDateKey
 			,DC.[AccountExecutiveID]
 			,dc.BusinessStartDate
-			,dateadd(dd,1095,DC.BusinessStartDate)  EndDate
+			--,dateadd(dd,1095,DC.BusinessStartDate)  EndDate
 			,	case when datediff(dd, dc.BusinessStartDate,BillingDate) between 1 and 365	then sbb.Yr1Rate
 					when datediff(dd, dc.BusinessStartDate,BillingDate) between 366 and 730   then sbb.Yr2Rate
 					when datediff(dd, dc.BusinessStartDate,BillingDate) between 731 and 1095	then sbb.Yr3Rate	
@@ -530,7 +530,7 @@ GROUP BY FC.FileKey
 			,FC.PerpetualRate			
 			,FC.[month]					 
 			,FC.BusinessStartDate		 
-			,FC.EndDate					 
+			--,FC.EndDate					 
 			,FC.AgingInDays				 
 			
 		
@@ -547,7 +547,7 @@ GROUP BY AgingInDays
 ,BucketName
 ,SiteNumber
 ,BusinessStartDate
-,EndDate
+--,EndDate
 ,CurrCommissionRate
 ,Yr1Rate
 ,Yr2Rate
@@ -577,7 +577,7 @@ TRUNCATE TABLE dbo.[RptExecutiveCommission]
 		,[BillingDateKey]
 		,[AccountAgingInDays]
 	,[BusinessStartDate]			
-	,EndDate						
+	--,EndDate						
 	,[AuditInsertedPackageKey]		
 	,[Yr1Rate]						
 	,[Yr2Rate]						
@@ -610,7 +610,7 @@ TRUNCATE TABLE dbo.[RptExecutiveCommission]
 			ELSE AccountAgingInDays										 
 			END AS [AccountAgingInDays]
 	,[BusinessStartDate]
-	,EndDate
+	--,EndDate
 ,@packagekey
 	,[Yr1Rate]		
 	,[Yr2Rate]		
@@ -636,7 +636,7 @@ TRUNCATE TABLE dbo.[RptExecutiveCommission]
 		,[BillingDateKey]
 		,[AccountAgingInDays]					
 		,[BusinessStartDate] 		
-		,EndDate					
+		--,EndDate					
 		 ,[Yr1Rate]					
 		  ,[Yr2Rate]				
 		  ,[Yr3Rate]				
