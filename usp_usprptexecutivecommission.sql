@@ -46,7 +46,7 @@ taskid	taskname				date			owner					desciRption					versionno
 */
 
 /*
-4/25/2019 alter usp spc type yr1--perpatual rate  value blank
+4/25/2019 alter usp SPC type yr1--perpatual rate  value blank
 */
 DECLARE @sourcecount INT = NULL
 	,@insertcount INT = NULL
@@ -196,7 +196,7 @@ BEGIN
 			INNER JOIN [dbo].[DimComponent] dct WITH (NOLOCK) ON dct.[componentkey] = fc.[componentkey]
 			INNER JOIN [dbo].[DimCommissionSetup] dcs WITH (NOLOCK) ON DATEDIFF(dd, DC.BusinessStartDate, CONVERT(DATE, CONVERT(VARCHAR, FC.BillingDateKey))) BETWEEN DCS.AccountAgeMin
 					AND DCS.AccountAgeMax 
-			WHERE DC.[CommissionType ] = 'spc'
+			WHERE DC.[CommissionType ] = 'SPC'
 				AND FC.[IsBilled] = 1
 			GROUP BY FC.FileKey
 				,DC.CompanyName1
@@ -656,21 +656,21 @@ SELECT DC.CompanyName1
 		,CONVERT(VARCHAR, CONVERT(DECIMAL(5, 2), CASE 											  
 					WHEN DC.[CommissionType ]= 'REG'
 						THEN DCs.AccountPayPercent
-					WHEN DC.[CommissionType ]= 'spc'
+					WHEN DC.[CommissionType ]= 'SPC'
 						THEN DC.CommissionPercent
 					END))
 		,- (																	--	[AmountPayablePercentage]
 			(ISNULL(FI.BadDebtAmount, 0.00) + ISNULL(FI.Amount, 0.00) - ISNULL(FI.Fee, 0.00)) * ISNULL(CASE 
 					WHEN DC.[CommissionType ]= 'REG'
 						THEN DCs.AccountPayPercent
-					WHEN DC.[CommissionType ]= 'spc'
+					WHEN DC.[CommissionType ]= 'SPC'
 						THEN DC.CommissionPercent
 					END, 0.00)
 			) / 100.00
 		,CASE 
 			WHEN DC.[CommissionType ]= 'REG'
 				THEN 'REGULAR'
-			WHEN DC.[CommissionType ]= 'spc'
+			WHEN DC.[CommissionType ]= 'SPC'
 				THEN 'Special'
 			END
 		,DC.AccountExecutive
