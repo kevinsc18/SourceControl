@@ -1,0 +1,6 @@
+# publish power to power bi service 
+# need to add parameter 
+  Server instance and database  
+  change paramete in the power bi service 
+# delete  the old source 
+# schedule refresh time
